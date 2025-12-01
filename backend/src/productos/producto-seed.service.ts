@@ -14,11 +14,8 @@ export class ProductoSeedService {
     const productosCount = await this.productosRepository.count();
 
     if (productosCount > 0) {
-      console.log('Productos ya existen. Seed de productos omitido.');
       return;
     }
-
-    console.log('Iniciando seed de productos...');
 
     const productos = [
       // Productos para hombres
@@ -110,9 +107,6 @@ export class ProductoSeedService {
     for (const producto of productos) {
       const nuevoProducto = this.productosRepository.create(producto);
       await this.productosRepository.save(nuevoProducto);
-      console.log(`✓ Producto creado: ${producto.nombre}`);
     }
-
-    console.log('Seed de productos completado.');
   }
 }

@@ -33,8 +33,7 @@ async function bootstrap() {
   } catch (error) {
     console.error('Error en seed:', error);
   }
-  
+
   await app.listen(3000);
-  console.log('Aplicación ejecutándose en http://localhost:3000');
 }
 bootstrap();

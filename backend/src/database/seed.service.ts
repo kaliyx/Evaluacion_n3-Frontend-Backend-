@@ -16,11 +16,8 @@ export class SeedService {
     const usuariosCount = await this.usuariosRepository.count();
 
     if (usuariosCount > 0) {
-      console.log('Base de datos ya contiene usuarios. Seed omitido.');
       return;
     }
-
-    console.log('Iniciando seed de datos...');
 
     // Crear usuario admin con username 'admin' y password 'admin'
     const adminPassword = await bcrypt.hash('admin', 10);
@@ -35,7 +32,6 @@ export class SeedService {
     });
 
     await this.usuariosRepository.save(admin);
-    console.log('✓ Admin creado: admin / admin');
 
     // Crear vendedor con username 'vendedor' y password '1234'
     const vendedorPassword = await bcrypt.hash('1234', 10);
@@ -50,8 +46,6 @@ export class SeedService {
     });
 
     await this.usuariosRepository.save(vendedor);
-    console.log('✓ Vendedor creado: vendedor / 1234');
-
-    console.log('Seed completado exitosamente.');
+    // Seed completado
   }
 }
