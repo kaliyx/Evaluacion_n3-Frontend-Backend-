@@ -2,21 +2,13 @@ import React from 'react';
 import { Card, Typography } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import Boton from '../atoms/Boton';
+import { styles } from '../../assets/styles';
 
 const { Meta } = Card;
 const { Text } = Typography;
 
 const TarjetaProducto = ({ producto, alAgregar }) => (
-  <Card
-    hoverable
-    style={{ width: 240, margin: '10px' }}
-    cover={
-      <img 
-        alt={producto.nombre} 
-        src={producto.imagen} 
-        style={{ height: 200, objectFit: 'cover' }} 
-      />
-    }
+  <Card hoverable style={styles.tarjetaProducto} cover={<img alt={producto.nombre} src={producto.imagen} style={styles.imagenProducto} />}
     actions={[
       <Boton 
         key="add" 
@@ -28,7 +20,7 @@ const TarjetaProducto = ({ producto, alAgregar }) => (
   >
     <Meta title={producto.nombre} description={`ID: ${producto.id}`} />
     <div style={{ marginTop: 10 }}>
-      <Text strong style={{ fontSize: 16 }}>${producto.precio}</Text>
+      <Text strong style={styles.productoPrecio}>${producto.precio}</Text>
     </div>
   </Card>
 );

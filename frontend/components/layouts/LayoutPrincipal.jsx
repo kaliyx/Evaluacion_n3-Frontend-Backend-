@@ -3,6 +3,7 @@ import { Layout, Menu } from 'antd';
 import { UserOutlined, ShopOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router'; // Importación correcta para Remix/RRv7
 import Boton from '../atoms/Boton';
+import { AppAntdProvider, layoutStyles } from '../../assets/antdConfig';
 
 const { Header, Content, Footer } = Layout;
 
@@ -17,43 +18,31 @@ const LayoutPrincipal = ({ children, rol }) => {
   }
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div 
-          className="logo" 
-          style={{ color: 'white', fontSize: 20, fontWeight: 'bold', cursor: 'pointer' }}
-          onClick={() => navigate('/')}
-        >
-          Urban Shop
-        </div>
-        
-        <Menu 
-          theme="dark" 
-          mode="horizontal" 
-          defaultSelectedKeys={['1']} 
-          items={itemsMenu}
-          style={{ flex: 1, minWidth: 0, marginLeft: 20 }}
-        />
-        
-        <Boton 
-          texto="Salir" 
-          icono={<LogoutOutlined />} 
-          tipo="primary" 
-          peligro 
-          onClick={() => navigate('/')} 
-        />
-      </Header>
-      
-      <Content style={{ padding: '0 50px', marginTop: 20 }}>
-        <div style={{ background: '#fff', padding: 24, minHeight: 380, borderRadius: 8 }}>
-          {children}
-        </div>
-      </Content>
-      
-      <Footer style={{ textAlign: 'center' }}>
-        Urban Shop ©2025 - Evaluación 3
-      </Footer>
-    </Layout>
+    <AppAntdProvider>
+      <Layout style={layoutStyles.layout}>
+        <Header style={layoutStyles.header}>
+          <div className="logo" style={layoutStyles.logo} onClick={() => navigate('/')}>
+            Urban Shop
+          </div>
+
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={['1']}
+            items={itemsMenu}
+            style={layoutStyles.menu}
+          />
+
+          <Boton texto="Salir" icono={<LogoutOutlined />} tipo="primary" peligro onClick={() => navigate('/')} />
+        </Header>
+
+        <Content style={layoutStyles.content}>
+          <div style={layoutStyles.contentInner}>{children}</div>
+        </Content>
+
+        <Footer style={layoutStyles.footer}>Urban Shop ©2025 - Evaluación 3</Footer>
+      </Layout>
+    </AppAntdProvider>
   );
 };
 

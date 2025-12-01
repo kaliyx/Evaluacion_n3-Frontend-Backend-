@@ -2,11 +2,12 @@ import React from 'react';
 import { List, Typography, Divider } from 'antd';
 import { DeleteOutlined, DollarCircleOutlined } from '@ant-design/icons';
 import Boton from '../atoms/Boton';
+import { styles } from '../../assets/styles';
 
 const { Title } = Typography;
 
 const PanelVendedor = ({ carrito, total, alEliminarItem, alPagar }) => (
-  <div style={{ padding: '20px', background: '#fff', height: '100%', minHeight: '80vh', borderLeft: '1px solid #f0f0f0' }}>
+  <div style={styles.panelVendedor}>
     <Title level={4}>Productos Agregados</Title>
     <Divider />
     
@@ -35,17 +36,17 @@ const PanelVendedor = ({ carrito, total, alEliminarItem, alPagar }) => (
     />
     
     <Divider />
-    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
+    <div style={styles.flexBetweenMargin}>
       <Title level={3}>Total:</Title>
       <Title level={3}>${total}</Title>
     </div>
     
-    <Boton 
-      texto="Realizar Pago" 
-      tipo="primary" 
-      onClick={alPagar} 
-      icono={<DollarCircleOutlined />} 
-      style={{ height: '50px', fontSize: '18px' }}
+    <Boton
+      texto="Realizar Pago"
+      tipo="primary"
+      onClick={alPagar}
+      icono={<DollarCircleOutlined />}
+      style={styles.botonGrande}
       block
     />
   </div>

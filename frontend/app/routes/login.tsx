@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Form, Input, Button, message } from 'antd';
 import { useLocation, useNavigate } from 'react-router';
 import API_BASE from '../config';
+import { styles } from '../../assets/styles';
 
 export default function Login() {
   const [form] = Form.useForm();
@@ -42,8 +43,8 @@ export default function Login() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f0f2f5' }}>
-      <Card title={`Login - ${role === 'admin' ? 'Administrador' : 'Vendedor'}`} style={{ width: 360 }}>
+    <div style={styles.centeredFullHeight}>
+      <Card title={`Login - ${role === 'admin' ? 'Administrador' : 'Vendedor'}`} style={styles.cardCenteredWidth360}>
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item name="username" label="Usuario" rules={[{ required: true }] }>
             <Input />
