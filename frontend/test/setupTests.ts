@@ -19,3 +19,11 @@ if (typeof window !== 'undefined' && !('matchMedia' in window)) {
 		dispatchEvent: () => false,
 	});
 }
+
+// Polyfill for window.getComputedStyle used by some antd utilities in jsdom
+if (typeof window !== 'undefined' && !('getComputedStyle' in window)) {
+	// @ts-ignore
+	window.getComputedStyle = (elt: Element) => ({
+		getPropertyValue: () => '',
+	});
+}

@@ -8,7 +8,10 @@ const { Meta } = Card;
 const { Text } = Typography;
 
 const TarjetaProducto = ({ producto, alAgregar }) => (
-  <Card hoverable style={styles.tarjetaProducto} cover={<img alt={producto.nombre} src={producto.imagen} style={styles.imagenProducto} />}
+  <Card
+    hoverable
+    style={styles.tarjetaProducto}
+    cover={producto.imagen ? <img alt={producto.nombre} src={producto.imagen} style={styles.imagenProducto} /> : null}
     actions={[
       <Boton 
         key="add" 
