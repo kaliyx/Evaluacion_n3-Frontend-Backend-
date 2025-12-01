@@ -47,6 +47,6 @@ export class Producto {
   @JoinColumn({ name: 'vendedor_id' })
   vendedor: Usuario;
 
-  @Column()
-  vendedor_id: number;
+  @Column({ nullable: true })
+  vendedor_id: number | null;
 }

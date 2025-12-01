@@ -8,7 +8,6 @@ import { VentasModule } from './ventas/ventas.module';
 import { SeedService } from './database/seed.service';
 import { ProductoSeedService } from './productos/producto-seed.service';
 import { AuthMiddleware } from './auth/auth.middleware';
-import { JwtService } from '@nestjs/jwt';
 import { Usuario } from './usuarios/usuario.entity';
 import { Producto } from './productos/producto.entity';
 
@@ -21,7 +20,7 @@ import { Producto } from './productos/producto.entity';
     UsuariosModule,
     VentasModule,
   ],
-  providers: [SeedService, ProductoSeedService, JwtService],
+  providers: [SeedService, ProductoSeedService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

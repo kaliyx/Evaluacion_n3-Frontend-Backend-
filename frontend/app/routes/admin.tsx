@@ -53,13 +53,15 @@ export default function Admin() {
 
   // Crear / Actualizar
   const guardarProducto = async (valores: any) => {
+    // Si no se selecciona ninguna imagen, usar imagen por defecto
+    const imagenDefecto = '/assets/imagenes/null.jpg';
     const payload = {
       nombre: valores.nombre,
       descripcion: valores.descripcion || valores.nombre,
       precio: Number(valores.precio),
       stock: Number(valores.stock),
       categoria: valores.categoria || 'accesorios',
-      imagen: valores.imagen || '',
+      imagen: valores.imagen || editing?.imagen || imagenDefecto,
       imageFile: imageFile,
     };
 
@@ -70,7 +72,7 @@ export default function Admin() {
         message.success('Producto actualizado');
       } else {
         const created = await api.crearProducto(payload);
-        setProductos([...productos, { id: created.id, ...payload }]);
+        setProductos([...productos, created]);
         message.success('Producto creado exitosamente');
       }
       setModalVisible(false);

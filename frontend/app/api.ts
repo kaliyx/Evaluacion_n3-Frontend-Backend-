@@ -7,8 +7,9 @@ async function handleRes(res: Response) {
 
 export async function getProductos() { 
   const res = await fetch(`${API_BASE}/productos`, { headers: { ...authHeaders() } }); 
-  if (!res.ok) throw new Error('Error fetching productos'); 
-  return handleRes(res); 
+  const data = await handleRes(res);
+  if (!res.ok) throw new Error(typeof data === 'string' ? data : (data?.message || JSON.stringify(data)));
+  return data;
 }
 
 export async function crearProducto(payload: any) {
@@ -44,8 +45,9 @@ export async function crearProducto(payload: any) {
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(bodyPayload),
   });
-  if (!res.ok) throw new Error('Error creating producto'); 
-  return handleRes(res); 
+  const data = await handleRes(res);
+  if (!res.ok) throw new Error(typeof data === 'string' ? data : (data?.message || JSON.stringify(data)));
+  return data;
 }
 
 export async function actualizarProducto(id: number, payload: any) {
@@ -79,8 +81,9 @@ export async function actualizarProducto(id: number, payload: any) {
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(bodyPayload),
   });
-  if (!res.ok) throw new Error('Error updating producto'); 
-  return handleRes(res); 
+  const data = await handleRes(res);
+  if (!res.ok) throw new Error(typeof data === 'string' ? data : (data?.message || JSON.stringify(data)));
+  return data;
 }
 
 export async function eliminarProducto(id: number) {
@@ -88,8 +91,9 @@ export async function eliminarProducto(id: number) {
     method: 'DELETE',
     headers: { ...authHeaders() },
   });
-  if (!res.ok) throw new Error('Error deleting producto'); 
-  return handleRes(res); 
+  const data = await handleRes(res);
+  if (!res.ok) throw new Error(typeof data === 'string' ? data : (data?.message || JSON.stringify(data)));
+  return data;
 }
 
 export default {
