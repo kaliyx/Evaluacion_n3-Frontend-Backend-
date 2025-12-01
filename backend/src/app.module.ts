@@ -9,10 +9,13 @@ import { SeedService } from './database/seed.service';
 import { ProductoSeedService } from './productos/producto-seed.service';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { JwtService } from '@nestjs/jwt';
+import { Usuario } from './usuarios/usuario.entity';
+import { Producto } from './productos/producto.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(databaseConfig),
+    TypeOrmModule.forFeature([Usuario, Producto]),
     AuthModule,
     ProductosModule,
     UsuariosModule,

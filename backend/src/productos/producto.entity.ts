@@ -19,8 +19,8 @@ export class Producto {
   stock: number;
 
   @Column({
-    type: 'enum',
-    enum: ['hombres', 'mujeres', 'niños', 'accesorios'],
+    type: 'varchar',
+    length: 50,
     nullable: false,
   })
   categoria: string;
@@ -29,8 +29,8 @@ export class Producto {
   imagen: string;
 
   @Column({
-    type: 'enum',
-    enum: ['activo', 'inactivo'],
+    type: 'varchar',
+    length: 20,
     default: 'activo',
   })
   estado: string;

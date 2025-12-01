@@ -16,6 +16,10 @@ export class ProductosService {
     }
 
     const nuevoProducto = this.productosRepository.create(producto);
+    // Asignar vendedor_id para evitar errores de clave foránea (vendedor requerido)
+    if (_usuarioId) {
+      (nuevoProducto as any).vendedor_id = _usuarioId;
+    }
     return this.productosRepository.save(nuevoProducto);
   }
 

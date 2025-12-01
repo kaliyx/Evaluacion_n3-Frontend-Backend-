@@ -1,11 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import { SeedService } from './database/seed.service';
 import { ProductoSeedService } from './productos/producto-seed.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   
   app.useGlobalPipes(
     new ValidationPipe({
@@ -16,6 +18,11 @@ async function bootstrap() {
   );
   
   app.enableCors();
+
+  // Serve uploaded files from /uploads
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+    prefix: '/uploads',
+  });
   
   const seedService = app.get(SeedService);
   const productoSeedService = app.get(ProductoSeedService);

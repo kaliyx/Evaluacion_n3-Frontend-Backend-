@@ -15,8 +15,8 @@ export class Usuario {
   password: string;
 
   @Column({
-    type: 'enum',
-    enum: ['admin', 'vendedor'],
+    type: 'varchar',
+    length: 50,
     default: 'vendedor',
   })
   rol: string;
