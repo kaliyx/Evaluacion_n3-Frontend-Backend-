@@ -6,7 +6,10 @@
 			"type": "shell",
 			"command": "npm test",
 			"args": [],
-			"isBackground": false
+			"isBackground": false,
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			}
 		}
 	]
 }
