@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, message } from 'antd';
 import { useNavigate } from 'react-router';
 
@@ -7,8 +7,9 @@ import LayoutPrincipal from '../../components/layouts/LayoutPrincipal';
 import BarraBusqueda from '../../components/molecules/BarraBusqueda';
 import TarjetaProducto from '../../components/molecules/TarjetaProducto';
 import PanelVendedor from '../../components/organisms/PanelVendedor';
+import API_BASE from '../config';
 
-// Datos Mock
+// Datos Mock (fallback)
 const PRODUCTOS_MOCK = [
   { id: 1, nombre: 'Polera Oversize', precio: 15000, imagen: '/assets/imagenes/polera.png' },
   { id: 2, nombre: 'Jeans Cargo', precio: 25000, imagen: '/assets/imagenes/jeans.png' },
@@ -19,6 +20,35 @@ export default function Vendedor() {
   const [productos, setProductos] = useState(PRODUCTOS_MOCK);
   const [carrito, setCarrito] = useState<any[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let mounted = true;
+    fetch(`${API_BASE}/productos`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Error al obtener productos');
+        return res.json();
+      })
+      .then((data) => {
+        if (!mounted) return;
+        // Map backend fields to frontend display-friendly shape
+        const mapped = Array.isArray(data)
+          ? data.map((p: any) => ({
+              id: p.id,
+              nombre: p.nombre,
+              precio: Number(p.precio),
+              imagen: p.imagen || '/assets/imagenes/polera.png',
+            }))
+          : PRODUCTOS_MOCK;
+        setProductos(mapped);
+      })
+      .catch((err) => {
+        console.warn('Fetch productos failed, usando mock', err);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const manejarBusqueda = (valor: string) => {
     const filtrados = PRODUCTOS_MOCK.filter(p => 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Form, Input, Button, message } from 'antd';
 import { useLocation, useNavigate } from 'react-router';
+import API_BASE from '../config';
 
 export default function Login() {
   const [form] = Form.useForm();
@@ -8,24 +9,36 @@ export default function Login() {
   const navigate = useNavigate();
   const role = (location.state as any)?.role || 'vendedor';
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     const { username, password } = values;
 
-    if (role === 'admin') {
-      if (username === 'admin' && password === 'admin') {
-        message.success('Ingreso exitoso como admin');
-        navigate('/admin');
-        return;
-      }
-    } else if (role === 'vendedor') {
-      if (username === 'vendedor' && password === '1234') {
-        message.success('Ingreso exitoso como vendedor');
-        navigate('/vendedor');
-        return;
-      }
-    }
+    try {
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
 
-    message.error('Usuario o contraseña incorrectos');
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        message.error(err?.message || 'Usuario o contraseña incorrectos');
+        return;
+      }
+
+      const data = await res.json();
+      const { token, usuario } = data;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+
+      message.success('Ingreso exitoso');
+
+      if (usuario?.rol === 'admin') navigate('/admin');
+      else navigate('/vendedor');
+    } catch (error) {
+      message.error('Error conectando con el servidor');
+      console.error('Login error', error);
+    }
   };
 
   return (
