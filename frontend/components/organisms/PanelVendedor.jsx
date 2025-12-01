@@ -15,22 +15,23 @@ const PanelVendedor = ({ carrito, total, alEliminarItem, alPagar }) => (
       itemLayout="horizontal"
       dataSource={carrito}
       renderItem={(item) => (
-        <div style={styles.flexBetweenMargin}>
-          <div>
-            <div>{item.nombre}</div>
-            <div>{`${item.cantidad} un. x $${item.precio}`}</div>
-          </div>
+        <List.Item key={item.id}>
           <div style={styles.flexBetweenMargin}>
-            <div><strong>${item.cantidad * item.precio}</strong></div>
-            <Boton 
-              key="del" 
-              icono={<DeleteOutlined />} 
-              peligro 
-              tipo="text" 
-              onClick={() => alEliminarItem(item.id)} 
-            />
+            <div>
+              <div>{item.nombre}</div>
+              <div>{`${item.cantidad} un. x $${item.precio}`}</div>
+            </div>
+            <div style={styles.flexBetweenMargin}>
+              <div><strong>${item.cantidad * item.precio}</strong></div>
+              <Boton
+                icono={<DeleteOutlined />}
+                peligro={true}
+                tipo="text"
+                onClick={() => alEliminarItem(item.id)}
+              />
+            </div>
           </div>
-        </div>
+        </List.Item>
       )}
     />
     
@@ -46,7 +47,7 @@ const PanelVendedor = ({ carrito, total, alEliminarItem, alPagar }) => (
       onClick={alPagar}
       icono={<DollarCircleOutlined />}
       style={styles.botonGrande}
-      block
+      block={true}
     />
   </div>
 );
