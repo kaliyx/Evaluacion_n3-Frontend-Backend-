@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Request, UploadedFile, UseInterceptors, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { existsSync, mkdirSync } from 'fs';
@@ -35,18 +35,7 @@ export class ProductosController {
 
   @Post()
   async crear(@Body() createProductoDto: CreateProductoDto, @Request() req: any) {
-    try {
-      return await this.productosService.crear(createProductoDto, req.usuario?.id, req.usuario?.rol);
-    } catch (error: any) {
-      console.error('Error creando producto:', error);
-      // Re-lanzar excepciones conocidas para que Nest las maneje correctamente
-      if (error instanceof BadRequestException || error instanceof InternalServerErrorException) {
-        throw error;
-      }
-      // Si el servicio arrojó una excepción con mensaje, devolverlo como BadRequest
-      const message = error?.message || 'Error al crear producto';
-      throw new BadRequestException(message);
-    }
+    return this.productosService.crear(createProductoDto, req.usuario?.id, req.usuario?.rol);
   }
 
   @Get()

@@ -14,12 +14,7 @@ export class ProductosService {
     if (rol !== 'admin') {
       throw new ForbiddenException('Solo el admin puede crear productos');
     }
-
     const nuevoProducto = this.productosRepository.create(producto);
-    // Asignar vendedor_id para evitar errores de clave foránea (vendedor requerido)
-    if (_usuarioId) {
-      (nuevoProducto as any).vendedor_id = _usuarioId;
-    }
     return this.productosRepository.save(nuevoProducto);
   }
 

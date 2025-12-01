@@ -7,7 +7,8 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private jwtService: JwtService) {}
 
   use(req: Request, _res: Response, next: NextFunction) {
-    const token = req.headers.authorization?.split(' ')[1];
+    const rawAuth = req.headers.authorization;
+    const token = rawAuth?.split(' ')[1];
 
     if (!token) {
       return next();
