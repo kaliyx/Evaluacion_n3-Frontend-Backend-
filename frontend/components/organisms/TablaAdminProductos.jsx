@@ -1,9 +1,23 @@
 import React from 'react';
-import { Table, Space, Popconfirm } from 'antd';
+import { Table, Space, Modal } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Boton from '../atoms/Boton';
 
 const TablaAdminProductos = ({ datos, alEditar, alEliminar }) => {
+  const { confirm } = Modal;
+
+  const showConfirm = (id) => {
+    confirm({
+      title: '¿Seguro de eliminar?',
+      okText: 'Sí',
+      cancelText: 'No',
+      centered: true,
+      onOk() {
+        alEliminar(id);
+      },
+    });
+  };
+
   const columnas = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: 'Nombre', dataIndex: 'nombre', key: 'nombre' },
@@ -19,9 +33,7 @@ const TablaAdminProductos = ({ datos, alEditar, alEliminar }) => {
             onClick={() => alEditar(record)} 
             tipo="default" 
           />
-          <Popconfirm title="¿Seguro de eliminar?" onConfirm={() => alEliminar(record.id)}>
-            <Boton icono={<DeleteOutlined />} peligro tipo="primary" />
-          </Popconfirm>
+          <Boton icono={<DeleteOutlined />} peligro tipo="primary" onClick={() => showConfirm(record.id)} />
         </Space>
       ),
     },
